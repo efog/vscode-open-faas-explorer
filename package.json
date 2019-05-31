@@ -1,0 +1,74 @@
+{
+	"name": "open-faas",
+	"displayName": "open-faas",
+	"description": "A VS Code extension for Open-FaaS CLI",
+	"version": "0.0.1",
+	"engines": {
+		"vscode": "^1.34.0"
+	},
+	"categories": [
+		"Other"
+	],
+	"activationEvents": [
+		"onView:openfaas-explorer",
+		"onCommand:openfaas.listFunctions"
+	],
+	"main": "./extension.js",
+	"contributes": {
+		"viewsContainers": {
+			"activitybar": [
+				{
+					"id": "openfaas-explorer",
+					"title": "OpenFaaS Explorer",
+					"icon": "media/logo.svg"
+				}
+			]
+		},
+		"views": {
+			"openfaas-explorer": [
+				{
+					"id": "openfaas-explorer",
+					"name": "Gateways"
+				}
+			]
+		},
+		"commands": [
+			{
+				"command": "openfaas-explorer.refreshEntry",
+				"title": "Refresh",
+				"icon": {
+					"light": "resources/light/refresh.svg",
+					"dark": "resources/dark/refresh.svg"
+				}
+			},
+			{
+				"command": "openfaas.listFunctions",
+				"title": "list open faas functions",
+				"category": "OpenFaaS operations"
+			}
+		],
+		"menus": {
+			"view/title": [
+				{
+					"command": "openfaas-explorer.refreshEntry",
+					"when": "view == openfaas-explorer",
+					"group": "navigation"
+				}]
+		}
+	},
+	"scripts": {
+		"postinstall": "node ./node_modules/vscode/bin/install",
+		"test": "node ./node_modules/vscode/bin/test"
+	},
+	"devDependencies": {
+		"typescript": "^3.3.1",
+		"vscode": "^1.1.28",
+		"eslint": "^5.13.0",
+		"@types/node": "^10.12.21",
+		"@types/mocha": "^2.2.42"
+	},
+	"dependencies": {
+		"bluebird": "^3.5.5",
+		"js-yaml": "^3.13.1"
+	}
+}
