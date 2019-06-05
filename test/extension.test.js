@@ -20,7 +20,7 @@ suite("openfaas provider tests", function () {
     test("should be able to fetch credentials token from config", (done) => {
         const OpenFaasProvider = require("../providers/openfaas-provider");
         const target = new OpenFaasProvider();
-        const token = target.getAuthenticationToken("http://127.0.0.1:31112");
+        const token = target.getAuthenticationToken("http://localhost:22222");
         assert.notEqual(token, null);
         done();
     });

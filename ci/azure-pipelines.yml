@@ -11,10 +11,12 @@ steps:
 - bash: |
     npm install
   displayName: Install Node.js dependencies
-- bash: |
-    npm run-script test > echo.txt
+- task: Npm@1
+  inputs:
+    command: custom
+    customCommand: test 
   displayName: Run unit tests
-  continueOnError: "true"
+  continueOnError: true
 - task: PublishTestResults@2
   condition: succeededOrFailed()
   inputs:

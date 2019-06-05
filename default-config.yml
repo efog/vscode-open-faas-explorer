@@ -1,0 +1,4 @@
+auths:
+- gateway: http://localhost:22222
+  auth: basic
+  token: abcdef

@@ -53,6 +53,10 @@ class OpenFaaSProvider {
             const config = jsYml.safeLoad(fs.readFileSync(`${home}/.openfaas/config.yml`, "utf8"));
             return config.auths;
         }
+        if (fs.existsSync(`${path.join("default-config.yml")}`)) {
+            const config = jsYml.safeLoad(fs.readFileSync(`${path.join("default-config.yml")}`, "utf8"));
+            return config.auths;
+        }
         throw new Error("openfaas config not found");
     }
 
