@@ -2,6 +2,7 @@
 	"name": "open-faas-explorer",
 	"displayName": "open-faas explorer",
 	"description": "A VS Code extension for Open-FaaS",
+	"publisher": "efog",
 	"version": "1.0.0",
 	"engines": {
 		"vscode": "^1.34.0"
