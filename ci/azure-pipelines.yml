@@ -31,4 +31,4 @@ steps:
 - task: PublishBuildArtifacts@1
   inputs:
     ArtifactName: open-faas-explorer-vsix
-    PathtoPublish: open-faas-explorer-*.vsix
+    PathtoPublish: open-faas-explorer-1.0.0.vsix
