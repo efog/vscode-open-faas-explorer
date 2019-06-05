@@ -1,9 +1,11 @@
 const Promise = require("bluebird");
 const fs = require("fs");
 const http = require("http");
+const isURL = require('isurl');
 const jsYml = require("js-yaml");
 const path = require("path");
 const os = require("os");
+const URL = require("whatwg-url");
 const vscode = require('vscode');
 
 /**
@@ -11,7 +13,7 @@ const vscode = require('vscode');
  */
 class OpenFaaSProvider {
 
-    constructor(openFaasGatewayUrl) {
+    constructor() {
         this._onDidChangeTreeData = new vscode.EventEmitter();
         this.onDidChangeTreeData = this._onDidChangeTreeData.event;
     }
@@ -19,12 +21,24 @@ class OpenFaaSProvider {
     /**
      * Returns openfaas authentication token
      *
-     * @param {number} index index of gateway to fetch token for
-     * @returns {string} openfaas authentication token
+     * @param {string} gatewayUrl gateway url to fetch token for
+     * @returns {object} openfaas authentication token object
      * @memberof OpenFaaSProvider
      */
-    getAuthenticationToken(index = 0) {
-        return this.getGateways()[index].token;
+    getAuthenticationToken(gatewayUrl) {
+        let token = null;
+        const gateways = this.getGateways();
+        for (let index = 0; index < gateways.length; index++) {
+            const element = gateways[index];
+            if (element.gateway === gatewayUrl) {
+                token = {
+                    "token": element.token,
+                    "auth": element.auth
+                };
+                break;
+            }
+        }
+        return token;
     }
 
     /**
@@ -42,11 +56,27 @@ class OpenFaaSProvider {
         throw new Error("openfaas config not found");
     }
 
+    /**
+     * Gets function for display in openfaas-detailsview
+     *
+     * @param {*} func function to present in details view
+     * @memberof OpenFaaSProvider
+     * @returns {void}
+     */
+    getFunction(func) {
+        console.log(`some trigger ${JSON.stringify(func)}`);
+    }
+
+    /**
+     * Returns a tree item element
+     * @param {*} element tree item element
+     * @returns {*} tree item element
+     */
     getTreeItem(element) {
         return element;
     }
 
-    getChildren(element) {
+    async getChildren(element) {
         if (!element) {
             const item = new vscode.TreeItem("OpenFaaS Gateways", vscode.TreeItemCollapsibleState.Expanded);
             item.contextValue = "root";
@@ -62,6 +92,27 @@ class OpenFaaSProvider {
                 return item;
             });
         }
+        if (element.contextValue.indexOf("http") === 0) {
+            const funcs = await this.list(element.contextValue);
+            return funcs.map((func) => {
+                const item = new vscode.TreeItem(func.name, vscode.TreeItemCollapsibleState.Collapsed);
+                item.contextValue = `${JSON.stringify(func)}`;
+                // item.command = {
+                //     "title": "",
+                //     "command": "openfaas-explorer.showFunction",
+                //     "tooltip": "display function details",
+                //     "arguments": [func]
+                // };
+                return item;
+            });
+        }
+        else if (element.contextValue) {
+            const func = JSON.parse(element.contextValue);
+            return Object.keys(func).map((key) => {
+                const item = new vscode.TreeItem(`${key}: ${func[key]}`, vscode.TreeItemCollapsibleState.None);
+                return item;
+            });
+        }
         return [];
     }
 
@@ -73,7 +124,7 @@ class OpenFaaSProvider {
     */
     list(openFaasGatewayUrl) {
         const promise = new Promise((resolve, reject) => {
-            const token = this.getAuthenticationToken();
+            const token = this.getAuthenticationToken(openFaasGatewayUrl);
             const req = new http.ClientRequest(`${openFaasGatewayUrl}/system/functions`, (res) => {
                 let data = "";
                 res.on("data", (chunk) => {
@@ -86,7 +137,9 @@ class OpenFaaSProvider {
                     return resolve(JSON.parse(data));
                 });
             });
-            req.setHeader("authorization", `Basic ${token}`);
+            if (token) {
+                req.setHeader("authorization", `${token.auth.charAt(0).toUpperCase() + token.auth.slice(1) || "basic"} ${token.token || ""}`);
+            }
             req.end();
         });
         return promise;

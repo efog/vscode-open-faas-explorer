@@ -15,12 +15,13 @@ function activate(context) {
     // Use the console to output diagnostic information (console.log) and errors (console.error)
     // This line of code will only be executed once when your extension is activated
     console.log('Congratulations, your extension "open-faas" is now active!');
-    context.subscriptions.push(vscode.commands.registerCommand('openfaas.listFunctions', () => {
-        return provider.list();
-    }));
     vscode.window.registerTreeDataProvider('openfaas-explorer', provider);
+    
     vscode.commands.registerCommand('openfaas-explorer.refreshEntry', () => { 
         return provider.getGateways(); 
+    });
+    vscode.commands.registerCommand("openfaas-explorer.showFunction", (func) => {
+        return provider.getFunction(func);
     });
 }
 exports.activate = activate;

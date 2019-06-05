@@ -19,14 +19,14 @@ const assert = require('assert');
 suite("openfaas provider tests", function () {
     test("should be able to fetch credentials token from config", (done) => {
         const OpenFaasProvider = require("../providers/openfaas-provider");
-        const target = new OpenFaasProvider("http://localhost:22222");
-        const token = target.getAuthenticationToken();
+        const target = new OpenFaasProvider();
+        const token = target.getAuthenticationToken("http://127.0.0.1:31112");
         assert.notEqual(token, null);
         done();
     });
     test("should be able to list configured gateways", (done) => {
         const OpenFaasProvider = require("../providers/openfaas-provider");
-        const target = new OpenFaasProvider("http://localhost:22222");
+        const target = new OpenFaasProvider();
         const gateways = target.getGateways();
         assert.notEqual(gateways, null);
         assert.equal(gateways.length, 1);
@@ -35,7 +35,6 @@ suite("openfaas provider tests", function () {
     test("should call openfaas list mock api", function (done) {
         const server = http.createServer(function (req, res) {
             assert.equal(url.parse(req.url).path, "/system/functions");
-            assert.notEqual(req.headers.authorization, null);
             res.writeHead(200, { 'Content-Type': 'application/json' });
             res.write(JSON.stringify([{
                 "name": "haveibeenpwned",
@@ -50,7 +49,7 @@ suite("openfaas provider tests", function () {
             res.end();
         }).listen(22222);
         const OpenFaasProvider = require("../providers/openfaas-provider");
-        const target = new OpenFaasProvider("http://localhost:22222");
+        const target = new OpenFaasProvider();
         target.list("http://localhost:22222")
             .then((functions) => {
                 assert.equal(1, functions.length, "mocked response contains 1 function");
