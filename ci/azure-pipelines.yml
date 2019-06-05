@@ -11,10 +11,11 @@ steps:
 - bash: |
     npm install
   displayName: Install Node.js dependencies
-- bash: |
-    npm run-script test
+- task: Npm@1
+  inputs:
+    customCommand: test 
   displayName: Run unit tests
-  timeoutInMinutes: 2
+  continueOnError: true
 - task: PublishTestResults@2
   condition: succeededOrFailed()
   inputs:
