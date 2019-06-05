@@ -9,11 +9,13 @@ steps:
     versionSpec: '10.x'
   displayName: 'Install Node.js'
 - task: Npm@1
+  displayName: Install NPM Modules
   inputs:
     command: install
-- task: Npm@1
-  inputs:
-    customCommand: unittest
+- bash: |
+    node ./node_modules/vscode/bin/install
+    npm run-script unittest
+  displayName: Run unit tests
 - task: PublishTestResults@2
   condition: succeededOrFailed()
   inputs:
