@@ -13,7 +13,9 @@ const vscode = require('vscode');
  */
 class OpenFaaSProvider {
 
-    constructor() {
+    constructor(configPath) {
+        const home = os.homedir();
+        this._configPath = configPath || `${path.join(home, ".openfaas", "config.yml")}`;
         this._onDidChangeTreeData = new vscode.EventEmitter();
         this.onDidChangeTreeData = this._onDidChangeTreeData.event;
     }
@@ -48,13 +50,8 @@ class OpenFaaSProvider {
      * @memberof OpenFaaSProvider
      */
     getGateways() {
-        const home = os.homedir();
-        if (fs.existsSync(`${path.join(home, ".openfaas", "config.yml")}`)) {
-            const config = jsYml.safeLoad(fs.readFileSync(`${home}/.openfaas/config.yml`, "utf8"));
-            return config.auths;
-        }
-        if (fs.existsSync(`${path.join("default-config.yml")}`)) {
-            const config = jsYml.safeLoad(fs.readFileSync(`${path.join("default-config.yml")}`, "utf8"));
+        if (this._configPath) {
+            const config = jsYml.safeLoad(fs.readFileSync(this._configPath, "utf8"));
             return config.auths;
         }
         throw new Error("openfaas config not found");

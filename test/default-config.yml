@@ -1,4 +1,4 @@
 auths:
-- gateway: http://localhost:22222
+- gateway: http://127.0.0.1:31111
   auth: basic
   token: abcdef

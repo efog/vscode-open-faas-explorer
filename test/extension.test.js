@@ -1,7 +1,10 @@
 const http = require("http");
+const path = require("path");
 const url = require("url");
 
 /* global suite, test */
+
+const configPath = path.join(process.cwd(), "..", "..", "test", "default-config.yml");
 
 //
 // Note: This example test is leveraging the Mocha test framework.
@@ -19,14 +22,14 @@ const assert = require('assert');
 suite("openfaas provider tests", function () {
     test("should be able to fetch credentials token from config", (done) => {
         const OpenFaasProvider = require("../providers/openfaas-provider");
-        const target = new OpenFaasProvider();
-        const token = target.getAuthenticationToken("http://localhost:22222");
+        const target = new OpenFaasProvider(configPath);
+        const token = target.getAuthenticationToken("http://127.0.0.1:31111");
         assert.notEqual(token, null);
         done();
     });
     test("should be able to list configured gateways", (done) => {
         const OpenFaasProvider = require("../providers/openfaas-provider");
-        const target = new OpenFaasProvider();
+        const target = new OpenFaasProvider(configPath);
         const gateways = target.getGateways();
         assert.notEqual(gateways, null);
         assert.equal(gateways.length, 1);
@@ -47,10 +50,10 @@ suite("openfaas provider tests", function () {
                 "annotations": { "prometheus.io.scrape": "false" }
             }]));
             res.end();
-        }).listen(22222);
+        }).listen(31111);
         const OpenFaasProvider = require("../providers/openfaas-provider");
-        const target = new OpenFaasProvider();
-        target.list("http://localhost:22222")
+        const target = new OpenFaasProvider(configPath);
+        target.list("http://127.0.0.1:31111")
             .then((functions) => {
                 assert.equal(1, functions.length, "mocked response contains 1 function");
                 done();
