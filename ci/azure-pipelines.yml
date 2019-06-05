@@ -13,6 +13,7 @@ steps:
   displayName: Install Node.js dependencies
 - task: Npm@1
   inputs:
+    command: custom
     customCommand: test 
   displayName: Run unit tests
   continueOnError: true
