@@ -2,9 +2,11 @@
 	"name": "open-faas-explorer",
 	"displayName": "open-faas explorer",
 	"description": "A VS Code extension for Open-FaaS",
-	"repository": {"url": "https://github.com/efog/vscode-open-faas-explorer"},
+	"repository": {
+		"url": "https://github.com/efog/vscode-open-faas-explorer"
+	},
 	"publisher": "efog",
-	"version": "1.0.0",
+	"version": "2.0.0",
 	"engines": {
 		"vscode": "^1.34.0"
 	},
