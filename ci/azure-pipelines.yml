@@ -9,6 +9,9 @@ steps:
     versionSpec: '10.x'
   displayName: 'Install Node.js'
 - bash: |
+    npm install -g vsce
+  displayName: Install VSCE packager
+- bash: |
     npm install
   displayName: Install Node.js dependencies
 - task: Npm@1
@@ -22,3 +25,10 @@ steps:
   inputs:
     testRunner: JUnit
     testResultsFiles: '**/test/test-results.xml'
+- bash: |
+    vsce package minor
+  displayName: Package VSIX
+- task: PublishBuildArtifacts@1
+  inputs:
+    ArtifactName: open-faas-explorer-vsix
+    PathtoPublish: open-faas-explorer-*.vsix
