@@ -61,7 +61,8 @@
 	},
 	"scripts": {
 		"postinstall": "node ./node_modules/vscode/bin/install",
-		"test": "node ./node_modules/vscode/bin/test"
+		"test": "node ./node_modules/vscode/bin/test",
+		"unittest": "node_modules/.bin/mocha --reporter mocha-junit-reporter -u tdd test/*.test.js"
 	},
 	"devDependencies": {
 		"typescript": "^3.3.1",
