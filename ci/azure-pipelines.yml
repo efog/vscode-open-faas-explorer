@@ -8,16 +8,15 @@ steps:
   inputs:
     versionSpec: '10.x'
   displayName: 'Install Node.js'
-- task: Npm@1
-  displayName: Install NPM Modules
-  inputs:
-    command: install
 - bash: |
-    node ./node_modules/vscode/bin/install
+    npm install
+  displayName: Install Node.js dependencies
+- bash: |
     npm run-script unittest
   displayName: Run unit tests
+  timeoutInMinutes: 2
 - task: PublishTestResults@2
   condition: succeededOrFailed()
   inputs:
     testRunner: JUnit
-    testResultsFiles: '**/TEST-RESULTS.xml'
+    testResultsFiles: '**/test-results.xml'
