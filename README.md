@@ -6,7 +6,7 @@ This extension allows the visualization of currently available Open-FaaS functio
 
 - See currently available functions in the Open-FaaS explorer tree-view
 
-\!\[Main Feature\]\(media/demo.gif\)
+![Main Feature](media/demo.gif)
 
 ## Known Issues
 
