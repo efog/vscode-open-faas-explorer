@@ -9,15 +9,18 @@ steps:
     versionSpec: '10.x'
   displayName: 'Install Node.js'
 - bash: |
+    cd src
     npm install -g vsce
   displayName: Install VSCE packager
 - bash: |
+    cd src
     npm install
   displayName: Install Node.js dependencies
 - task: Npm@1
   inputs:
     command: custom
     customCommand: test 
+    workingDir: src
   displayName: Run unit tests
   continueOnError: true
 - task: PublishTestResults@2
@@ -33,12 +36,13 @@ steps:
    archiveFilePatterns: sonar-scanner*.zip
    destinationFolder: sonar
 - powershell: |
-    ./sonar/sonar-scanner-3.3.0.1492-windows/bin/sonar-scanner.bat -D"sonar.projectKey=efog_vscode-open-faas-explorer" -D"sonar.organization=efog-github" -D"sonar.sources=../../../" -D"sonar.host.url=https://sonarcloud.io" -D"sonar.login=1f99b9fcb97e50282539815b793999467b65c0f0"
+    ./sonar/sonar-scanner-3.3.0.1492-windows/bin/sonar-scanner.bat -D"sonar.projectKey=efog_vscode-open-faas-explorer" -D"sonar.organization=efog-github" -D"sonar.sources=./src" -D"sonar.host.url=https://sonarcloud.io" -D"sonar.login=1f99b9fcb97e50282539815b793999467b65c0f0"
   displayName: Run Sonar Scanner
 - bash: |
+    cd src
     vsce package -o open-faas-explorer.vsix
   displayName: Package VSIX
 - task: PublishBuildArtifacts@1
   inputs:
     ArtifactName: open-faas-explorer-vsix
-    PathtoPublish: open-faas-explorer.vsix
+    PathtoPublish: src/open-faas-explorer.vsix

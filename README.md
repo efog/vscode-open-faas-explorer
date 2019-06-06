@@ -8,7 +8,7 @@ This extension allows the visualization of currently available Open-FaaS functio
 
 - See currently available functions in the Open-FaaS explorer tree-view
 
-![Main Feature](media/demo.gif)
+![Main Feature](src/media/demo.gif)
 
 ## Known Issues
 
@@ -18,9 +18,8 @@ Complex properties of functions are not yet properly displayed
 
 This is the first release, please submit issues for defects and improvements.
 
-### 1.0.0
+### 1.1.0
 
 Initial release
 
 -----------------------------------------------------------------------------------------------------------
-
