@@ -26,12 +26,15 @@ steps:
     testRunner: JUnit
     testResultsFiles: '**/test/test-results.xml'
 - bash: |
-    curl -O https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-3.3.0.1492-windows.zip &
-    unzip sonar-scanner-cli-3.3.0.1492-windows.zip &
+    curl -O https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-3.3.0.1492-windows.zip
   displayName: Download Sonar Scanner
+- task: ExtractFiles@1
+  inputs: 
+   archiveFilePatterns: sonar-scanner*.zip
+   destinationFolder: .
 - powershell: |
-    cd sonar-scanner-cli-3.3.0.1492-windows 
     sonar-scanner.bat -D"sonar.projectKey=efog_vscode-open-faas-explorer" -D"sonar.organization=efog-github" -D"sonar.sources=." -D"sonar.host.url=https://sonarcloud.io" -D"sonar.login=1f99b9fcb97e50282539815b793999467b65c0f0"
+  displayName: Run Sonar Scanner
 - bash: |
     vsce package -o open-faas-explorer.vsix
   displayName: Package VSIX
