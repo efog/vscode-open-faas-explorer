@@ -26,9 +26,9 @@ steps:
     testRunner: JUnit
     testResultsFiles: '**/test/test-results.xml'
 - bash: |
-    vsce package minor
+    vsce package -o open-faas-explorer.vsix
   displayName: Package VSIX
 - task: PublishBuildArtifacts@1
   inputs:
     ArtifactName: open-faas-explorer-vsix
-    PathtoPublish: open-faas-explorer-1.0.0.vsix
+    PathtoPublish: open-faas-explorer.vsix
