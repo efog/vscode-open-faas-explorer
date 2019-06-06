@@ -26,7 +26,7 @@ steps:
     testRunner: JUnit
     testResultsFiles: '**/test/test-results.xml'
 - bash: |
-    wget https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-3.3.0.1492-windows.zip &
+    curl -O https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-3.3.0.1492-windows.zip &
     unzip sonar-scanner-cli-3.3.0.1492-windows.zip &
   displayName: Download Sonar Scanner
 - powershell: |
