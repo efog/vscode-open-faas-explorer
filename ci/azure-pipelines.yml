@@ -49,9 +49,9 @@ steps:
   inputs:
     archiveType: zip
     includeRootFolder: false
-    archiveFile: out/$(Build.Number).zip
+    archiveFile: out/$(Build.BuildNumber).zip
     rootFolderOrFile: src
 - task: PublishBuildArtifacts@1
   inputs:
-    ArtifactName: build-$(Build.Number)
-    PathtoPublish: out/$(Build.Number).zip
+    ArtifactName: build-$(Build.BuildNumber)
+    PathtoPublish: out/$(Build.BuildNumber).zip
