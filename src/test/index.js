@@ -19,7 +19,7 @@ testRunner.configure({
     "ui": 'tdd',
     "useColors": true,
     "reporter": "mocha-junit-reporter",
-    "reporterOptions": {"mochaFile": "../../src/test/test-results.xml"}
+    "reporterOptions": {"mochaFile": "/test/test-results.xml"}
 });
 
 module.exports = testRunner;
