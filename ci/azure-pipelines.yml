@@ -39,10 +39,19 @@ steps:
     ./sonar/sonar-scanner-3.3.0.1492-windows/bin/sonar-scanner.bat -D"sonar.projectKey=efog_vscode-open-faas-explorer" -D"sonar.organization=efog-github" -D"sonar.sources=./src" -D"sonar.host.url=https://sonarcloud.io" -D"sonar.login=1f99b9fcb97e50282539815b793999467b65c0f0"
   displayName: Run Sonar Scanner
 - bash: |
+    rm -rf sonar
+  displayName: Delete Sonar
+- bash: |
     cd src
     vsce package -o open-faas-explorer.vsix
   displayName: Package VSIX
+- task: ArchiveFiles@2
+  inputs:
+    archiveType: zip
+    includeRootFolder: false
+    archiveFile: out/$(Build.Number).zip
+    rootFolderOrFile: src
 - task: PublishBuildArtifacts@1
   inputs:
-    ArtifactName: open-faas-explorer-vsix
-    PathtoPublish: src/open-faas-explorer.vsix
+    ArtifactName: build-$(Build.Number)
+    PathtoPublish: out/$(Build.Number).zip
