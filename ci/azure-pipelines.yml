@@ -6,12 +6,8 @@ pool:
 steps:
 - task: NodeTool@0
   inputs:
-    versionSpec: '10.x'
+    versionSpec: '12.x'
   displayName: 'Install Node.js'
-- bash: |
-    cd src
-    npm install -g vsce
-  displayName: Install VSCE packager
 - bash: |
     cd src
     npm install
@@ -40,18 +36,14 @@ steps:
   displayName: Run Sonar Scanner
 - bash: |
     rm -rf sonar
-  displayName: Delete Sonar
-- bash: |
-    cd src
-    vsce package -o open-faas-explorer.vsix
-  displayName: Package VSIX
+  displayName: Delete Sonar Files
 - task: ArchiveFiles@2
   inputs:
     archiveType: zip
     includeRootFolder: false
-    archiveFile: out/$(Build.BuildNumber).zip
+    archiveFile: out/build.zip
     rootFolderOrFile: src
 - task: PublishBuildArtifacts@1
   inputs:
-    ArtifactName: build-$(Build.BuildNumber)
-    PathtoPublish: out/$(Build.BuildNumber).zip
+    ArtifactName: build
+    PathtoPublish: out/build.zip
