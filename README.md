@@ -18,6 +18,10 @@ Complex properties of functions are not yet properly displayed
 
 This is the first release, please submit issues for defects and improvements.
 
+### 1.1.2
+
+Refactor project structure, upgrade vulnerable dependencies. Properly implement CI/CD.
+
 ### 1.1.0
 
 Initial release
