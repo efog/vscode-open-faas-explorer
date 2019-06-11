@@ -89,26 +89,26 @@ class OpenFaaSProvider {
             const gateways = this.getGateways();
             return gateways.map((gateway) => {
                 const item = new vscode.TreeItem(gateway.gateway, vscode.TreeItemCollapsibleState.Collapsed);
-                item.contextValue = `${gateway.gateway}`;
+                item.contextValue = `gateway`;
+                item.label = `${gateway.gateway}`;
                 return item;
             });
         }
-        if (element.contextValue.indexOf("http") === 0) {
-            const funcs = await this.list(element.contextValue);
+        if (element.contextValue === "gateway") {
+            const funcs = await this.list(element.label);
             return funcs.map((func) => {
                 const item = new vscode.TreeItem(func.name, vscode.TreeItemCollapsibleState.Collapsed);
-                item.contextValue = `${JSON.stringify(func)}`;
-                // item.command = {
-                //     "title": "",
-                //     "command": "openfaas-explorer.showFunction",
-                //     "tooltip": "display function details",
-                //     "arguments": [func]
-                // };
+                item.contextValue = `${JSON.stringify({
+                    "gateway": element.label,
+                    "function": func
+                })}`;
+                item.label = `${func.name}`;
                 return item;
             });
         }
         else if (element.contextValue) {
-            const func = JSON.parse(element.contextValue);
+            const context = JSON.parse(element.contextValue);
+            const func = context.function;
             return Object.keys(func).map((key) => {
                 const item = new vscode.TreeItem(`${key}: ${func[key]}`, vscode.TreeItemCollapsibleState.None);
                 return item;

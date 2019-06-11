@@ -23,6 +23,9 @@ function activate(context) {
     vscode.commands.registerCommand("openfaas-explorer.showFunction", (func) => {
         return provider.getFunction(func);
     });
+    vscode.commands.registerCommand('openfaas-explorer.viewPortal', (node) => {
+        return vscode.commands.executeCommand('vscode.open', vscode.Uri.parse(node.label));  
+    });
 }
 exports.activate = activate;
 

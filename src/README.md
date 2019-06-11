@@ -16,7 +16,12 @@ Complex properties of functions are not yet properly displayed
 
 ## Release Notes
 
-This is the first release, please submit issues for defects and improvements.
+### 1.1.4
+
+- Minor refactoring
+- It's now possible to open gateway portal page from the explorer tree.
+
+![Open Gateway in Browser](src/media/demo2.gif)
 
 ### 1.1.2
 
