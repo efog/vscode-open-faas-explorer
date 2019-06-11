@@ -8,7 +8,7 @@ This extension allows the visualization of currently available Open-FaaS functio
 
 - See currently available functions in the Open-FaaS explorer tree-view
 
-![Main Feature](src/media/demo.gif)
+![Main Feature](media/demo.gif)
 
 ## Known Issues
 
@@ -21,7 +21,7 @@ Complex properties of functions are not yet properly displayed
 - Minor refactoring
 - It's now possible to open gateway portal page from the explorer tree.
 
-![Open Gateway in Browser](src/media/demo2.gif)
+![Open Gateway in Browser](media/demo2.gif)
 
 ### 1.1.2
 
