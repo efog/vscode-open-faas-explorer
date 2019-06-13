@@ -16,6 +16,10 @@ Complex properties of functions are not yet properly displayed
 
 ## Release Notes
 
+### 1.1.5
+
+Now with more extension icon!
+
 ### 1.1.4
 
 - Minor refactoring

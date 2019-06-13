@@ -6,7 +6,7 @@
 		"url": "https://github.com/efog/vscode-open-faas-explorer"
 	},
 	"publisher": "efog",
-	"version": "1.1.4",
+	"version": "1.1.5",
 	"engines": {
 		"vscode": "^1.34.0"
 	},
@@ -16,6 +16,7 @@
 	"activationEvents": [
 		"onView:openfaas-explorer"
 	],
+	"icon": "./media/whale.png",
 	"main": "./extension.js",
 	"contributes": {
 		"viewsContainers": {
