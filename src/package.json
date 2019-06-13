@@ -16,7 +16,7 @@
 	"activationEvents": [
 		"onView:openfaas-explorer"
 	],
-	"icon": "./media/whale.png",
+	"icon": "media/whale.png",
 	"main": "./extension.js",
 	"contributes": {
 		"viewsContainers": {
